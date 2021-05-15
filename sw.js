@@ -7,7 +7,6 @@
 var CACHE_NAME = 'journal-site';
 var urlsToCache = [
   './',
-  './sw.js'
 ];
 
 self.addEventListener('install', function(event) {
@@ -22,7 +21,7 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('activate', function(event) {
-    event.waitUntil(clients.claim());
+    clients.claim();
 });
 
 self.addEventListener('fetch', function(event) {
@@ -49,7 +48,7 @@ self.addEventListener('fetch', function(event) {
   
               caches.open(CACHE_NAME)
                 .then(function(cache) {
-                  // console.log("added " + response + " entry to cache");
+                  // console.log(event.request);
                   cache.put(event.request, responseToCache);
                 });
   
