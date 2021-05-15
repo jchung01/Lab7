@@ -5,7 +5,7 @@ export const router = {};
 /**
  * Changes the "page" (state) that your SPA app is currently set to
  */
-router.setState = function() {
+router.setState = function(state, push = true, data, journalNum) {
   /**
    * - There are three states that your SPA app will have
    *    1. The home page
@@ -35,4 +35,45 @@ router.setState = function() {
    *    1. You may add as many helper functions in this file as you like
    *    2. You may modify the parameters of setState() as much as you like
    */
+  router.state = state;
+  const body = document.querySelector("body");
+  const header = document.querySelector("body header h1");
+  const existingEntry = document.querySelector('body entry-page');
+  // push the state, then set the page
+  if(state == 'entry-page') {
+    if(push) {
+      history.pushState({currState: 'entry-page', entry: data.entry, entryNum: journalNum}, 'entry-page', '#entry' + (journalNum + 1));
+    }
+    // change header
+    header.innerHTML = 'Entry ' + (journalNum + 1);
+    // change to entry-page style
+    body.classList.add('single-entry');
+    // replace entry-page with new one
+    existingEntry.remove();
+    const singleEntry = document.createElement('entry-page');
+    singleEntry.entry = data.entry;
+    body.appendChild(singleEntry);
+  }
+  else if(state == 'settings') {
+    if(push) {
+      history.pushState({currState: 'settings'}, 'settings', '#settings');
+    }
+    // change header
+    header.innerHTML = "Settings";
+    // change to settings style
+    body.classList.remove('single-entry');
+    body.classList.add('settings', 'div-settings'); 
+    
+  }
+  else { // state == 'main'
+    if(push) {
+      history.pushState({currState: 'main'}, 'main', ' ');
+    }
+    // change header
+    header.innerHTML = "Journal Entries";
+    // change back to main style
+    body.classList.remove('settings', 'div-settings', 'single-entry');
+  }
 }
+
+
