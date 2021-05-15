@@ -47,6 +47,7 @@ router.setState = function(state, push = true, data, journalNum) {
     // change header
     header.innerHTML = 'Entry ' + (journalNum + 1);
     // change to entry-page style
+    body.classList.remove('settings', 'div-settings');
     body.classList.add('single-entry');
     // replace entry-page with new one
     existingEntry.remove();
