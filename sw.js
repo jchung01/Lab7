@@ -6,8 +6,8 @@
 //   - One for fetch requests
 var CACHE_NAME = 'journal-site';
 var urlsToCache = [
-  '/',
-  '/sw.js'
+  './',
+  './sw.js'
 ];
 
 self.addEventListener('install', function(event) {
